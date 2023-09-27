@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function Calendar() {
   // Function to get the days in a month
@@ -16,6 +16,7 @@ function Calendar() {
   // State to keep track of the current month and year
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [selectedDate, setSelectedDate] = useState();
 
   // Handle navigation to the next month
   const goToNextMonth = () => {
@@ -48,6 +49,20 @@ function Calendar() {
     { length: daysInMonth },
     (_, index) => index + 1
   );
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    const currentDay = currentDate.getDate();
+
+    // Check if the current year and month match the calendar's displayed year and month
+    if (currentYear === currentYear && currentMonth === currentMonth) {
+      setSelectedDate(`${currentDay}/${currentMonth + 1}/${currentYear}`);
+    } else {
+      setSelectedDate(null); // Reset selectedDate if it's not in the displayed month
+    }
+  }, []);
 
   // Create an array of day labels (Sunday to Saturday)
   const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -109,11 +124,13 @@ function Calendar() {
         {daysArray.map((day) => (
           <div
             key={day}
-            className="w-1/7 p-2 text-sm  text-center"
+            className={
+              selectedDate === `${day}/${currentMonth + 1}/${currentYear}`
+                ? `w-1/7 cursor-pointer aspect-square p-2 text-sm  text-center bg-primary rounded-full text-white`
+                : `w-1/7 cursor-pointer aspect-square p-2 text-sm  text-center `
+            }
             onClick={() =>
-              console.log(
-                `Selected date: ${day}/${currentMonth + 1}/${currentYear}`
-              )
+              setSelectedDate(`${day}/${currentMonth + 1}/${currentYear}`)
             }
           >
             {day}
