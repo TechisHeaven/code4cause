@@ -9,7 +9,7 @@ Created in React js and tailwind css with react framer motion and heroicons and 
 Clone the project
 
 ```bash
-  git clone https://github.com/TechisHeaven/explore-ease.git
+  git clone https://github.com/TechisHeaven/code4cause.git
 ```
 
 Go to the project directory
