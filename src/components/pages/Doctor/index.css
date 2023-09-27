@@ -1,0 +1,11 @@
+.doctor-items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 18px;
+  grid-row-gap: 18px;
+}
+/* 
+.doctor-item .image {
+  outline: 2px solid;
+  outline-offset: 6px;
+} */

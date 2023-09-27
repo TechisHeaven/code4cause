@@ -1,0 +1,19 @@
+#tick {
+  animation: drawTick 1s ease-in-out forwards;
+  color: gray;
+}
+
+@keyframes drawTick {
+  from {
+    stroke-dasharray: 0 100;
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dasharray: 100 100;
+    stroke-dashoffset: -100;
+  }
+}
+
+#password-hide path:nth-child(3) {
+  stroke-dashoffset: 2600;
+}

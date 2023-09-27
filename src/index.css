@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  color: #333333;
+  font-family: "Source Sans 3", sans-serif;
+  image-rendering: auto;
+}
+
+.chatBotSection::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 400px;
+  bottom: -14px;
+  border-radius: 10px;
+  max-width: 1000px;
+  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  z-index: -1;
+  background-color: #f9f7f3;
+}
+
+.chatBotSection::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 400px;
+  bottom: -24px;
+  border-radius: 10px;
+  max-width: 980px;
+  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  z-index: -2;
+  background-color: #f9f7f3;
+}
+
+/* svg animate  */
+.stopanimate path {
+  fill: #f9f7f3;
+}
+.animate path {
+  fill: #f9f7f3;
+  transform-origin: center;
+}
+.animate path:nth-child(1) {
+  animation: path-animation 2s ease-in-out infinite 0.2s;
+}
+.animate path:nth-child(2) {
+  animation: path-animation 2s ease-in-out infinite 0.4s;
+}
+.animate path:nth-child(3) {
+  animation: path-animation 2s ease-in-out infinite 0.6s;
+}
+.animate path:nth-child(4) {
+  animation: path-animation 2s ease-in-out infinite 0.8s;
+}
+.animate path:nth-child(5) {
+  animation: path-animation 2s ease-in-out infinite 1s;
+}
+
+@keyframes path-animation {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.15);
+  }
+}
+
+/* .curved-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -5px; 
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background-color: transparent;
+  border-top: 10px solid red;
+  border-radius: 80%; 
+} */
+
+.curved-underline {
+  transform: translateX(50%);
+  text-decoration: none;
+  width: 40%;
+  margin: auto;
+  height: 20px;
+  background-color: transparent;
+  border-top: 6px solid;
+  border-radius: 100%;
+  border: linear-gradient(360deg, white 0%, rgba(46, 41, 78, 1) 50%);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #2e294e;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2e294e;
+}
