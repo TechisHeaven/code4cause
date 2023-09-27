@@ -38,33 +38,27 @@ function Calendar() {
     }
   };
 
-  // Calculate the number of days in the current month
   const daysInMonth = getDaysInMonth(currentYear, currentMonth);
-
-  // Calculate the day of the week for the first day of the month
   const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
 
-  // Create an array of day numbers for the current month
   const daysArray = Array.from(
     { length: daysInMonth },
     (_, index) => index + 1
   );
-
+  // auto select date
   useEffect(() => {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth();
     const currentDay = currentDate.getDate();
 
-    // Check if the current year and month match the calendar's displayed year and month
     if (currentYear === currentYear && currentMonth === currentMonth) {
       setSelectedDate(`${currentDay}/${currentMonth + 1}/${currentYear}`);
     } else {
-      setSelectedDate(null); // Reset selectedDate if it's not in the displayed month
+      setSelectedDate(null);
     }
   }, []);
 
-  // Create an array of day labels (Sunday to Saturday)
   const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   return (
