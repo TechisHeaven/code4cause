@@ -1,6 +1,7 @@
 import { color } from "framer-motion";
 import React from "react";
 import { Link } from "react-router-dom";
+import Checkout from "../Appointment/Checkout/Checkout";
 const DoctorCards = () => {
   const DoctorList = [
     {
