@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useStateContext } from "../../../store";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
+  const state = useStateContext();
+  let user = state.user.user;
+  const location = useNavigate();
+  useEffect(() => {
+    if (!user) {
+      location("/");
+    }
+  }, []);
   const appointment = [
     {
       id: 1,
@@ -44,18 +54,24 @@ const Profile = () => {
     },
   ];
   return (
-    <div className="max-w-[1280px] m-auto">
+    <div className="max-w-[1280px] m-auto my-12">
       <div className="flex flex-row gap-8 justify-center">
         <div className="max-w-[420px] max-h-[620px] w-full bg-white shadow-md border p-4 rounded-md flex flex-col gap-4">
-          <img src="./profile.png" alt="profile image" />
+          <div className="w-full h-1/2 overflow-hidden ">
+            <img
+              className="w-full h-full object-cover"
+              src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt="profile image"
+            />
+          </div>
           <div className="flex justify-between">
             <h1 className="text-xl font-semibold">My Profile</h1>
-            <p className="text-sm text-textSecondary">
+            <p className="text-sm text-textSecondary capitalize">
               last login: 10 september 2023
             </p>
           </div>
-          <p className="text-textSecondary p-2 border-b-2">Kiran Patel</p>
-          <p className="text-textSecondary p-2 border-b-2">kiran@gmail.com</p>
+          <p className="text-textSecondary p-2 border-b-2">{user.name}</p>
+          <p className="text-textSecondary p-2 border-b-2">{user.email}</p>
           <p className="text-textSecondary p-2 border-b-2">+918527942120</p>
         </div>
         <div className="max-w-[420px] max-h-[620px] w-full bg-white shadow-md border p-4 rounded-md flex flex-col gap-4">

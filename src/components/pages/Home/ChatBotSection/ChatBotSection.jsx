@@ -1,12 +1,17 @@
 import React from "react";
 import MicSoundSvg from "./MicSoundSvg";
+import LazyImage from "../../../utils/LazyImage";
 
 const ChatBotSection = () => {
   return (
     <div className="rounded-xl chatBotSection bg-background overflow-hidden flex  flex-col items-center outline outline-2 shadow-2xl shadow-secondary/70 hover:shadow-secondary/80 transition-all outline-secondary m-auto max-w-[1028px]">
       <div className="header bg-primary p-4 w-full"></div>
       <div className="image w-[400px] aspect-square py-4">
-        <img src="./doctor.png" alt="doctor" />
+        <LazyImage
+          smallSrc="./doctor-small.png"
+          largeSrc="./doctor.webp"
+          alt="Doctor"
+        />
       </div>
       <div className="relative w-full m-4">
         <div className="bottom-chat absolute bottom-0 left-[50%] translate-x-[-50%] max-w-[480px]  m-auto bg-textMain/30 w-full flex justify-between items-center rounded-full">

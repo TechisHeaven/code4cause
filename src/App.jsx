@@ -10,9 +10,25 @@ import Chat from "./components/pages/Chat/index";
 import FindDoctor from "./components/pages/Doctor/FindDoctor";
 import Appointment from "./components/pages/Doctor/Appointment";
 import Checkout from "./components/pages/Doctor/Appointment/Checkout/Checkout";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
+import { useDispatchContext } from "./store";
+import ProtectedRoute from "./Routes/ProtectedRoute";
 
 function App() {
-  const user = false;
+  const dispatch = useDispatchContext();
+
+  useEffect(() => {
+    dispatch({ type: "LOGIN_REQUEST" });
+    let user = Cookies.get("user");
+    if (user) {
+      user = JSON.parse(user);
+      dispatch({ type: "LOGIN_SUCCESS", payload: user });
+    } else {
+      dispatch({ type: "LOGIN_FAILURE" });
+    }
+  }, []);
+
   return (
     <>
       <Header />
@@ -25,8 +41,17 @@ function App() {
         <Route path="/contact" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/chat" element={<Chat />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        {/* <ProtectedRoute path="/profile" element={<Profile />} /> */}
+
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

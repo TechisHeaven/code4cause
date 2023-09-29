@@ -1,7 +1,39 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatchContext, useStateContext } from "../../../../store";
 
 const Register = () => {
+  const { user } = useStateContext();
+  const dispatch = useDispatchContext();
   const [passwordHide, setPasswordHide] = useState(false);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const location = useNavigate();
+  // handle user login
+  useEffect(() => {
+    if (user.user) {
+      location("/");
+    }
+  }, []);
+
+  const handleLogin = () => {
+    const UserData = {
+      name: name,
+      email: email,
+      password: password,
+    };
+    const url = import.meta.env.VITE_AXIOS_URL + "user";
+    axios.post(url, UserData).then((response) => {
+      dispatch({ type: "LOGIN_REQUEST" });
+      showToast("Success Register!", "success");
+      delete response.data[0].password;
+      Cookies.set("user", JSON.stringify(response.data[0]), { expires: 30 });
+      dispatch({ type: "LOGIN_SUCCESS", payload: response.data[0] });
+      location("/");
+    });
+  };
   return (
     <div className="max-w-[480px] m-auto p-8 rounded-md shadow-lg my-20 border">
       <div className="wrapper flex flex-col gap-4">
@@ -14,6 +46,7 @@ const Register = () => {
         <div className="input flex flex-col gap-4">
           <div className="relative">
             <input
+              onChange={(e) => setName(e.target.value)}
               type="text"
               className="p-2 border rounded-md w-full"
               placeholder="Enter Name"
@@ -21,6 +54,7 @@ const Register = () => {
           </div>
           <div className="relative">
             <input
+              onChange={(e) => setEmail(e.target.value)}
               type="email"
               className="p-2 border rounded-md w-full"
               placeholder="Enter Email"
@@ -41,6 +75,7 @@ const Register = () => {
           </div>
           <div className="relative">
             <input
+              onChange={(e) => setPassword(e.target.value)}
               type={passwordHide ? "text" : "password"}
               className="p-2 border rounded-md w-full"
               placeholder="Password"
@@ -83,7 +118,10 @@ const Register = () => {
               </p>
             )}
           </div>
-          <button className="capitalize shadow-md hover:shadow-lg bg-primary hover:bg-primaryHover transition-all text-white p-2 px-4 rounded-md">
+          <button
+            onClick={handleLogin}
+            className="capitalize shadow-md hover:shadow-lg bg-primary hover:bg-primaryHover transition-all text-white p-2 px-4 rounded-md"
+          >
             Sign in
           </button>
         </div>

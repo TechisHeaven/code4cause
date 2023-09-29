@@ -1,8 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
+import axios from "axios";
+import { showToast } from "../../utils/Toast";
+import { useDispatchContext, useStateContext } from "../../../store";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const { user } = useStateContext();
+  const dispatch = useDispatchContext();
   const [passwordHide, setPasswordHide] = useState(false);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const location = useNavigate();
+  // handle user login
+  useEffect(() => {
+    if (user.user) {
+      location("/");
+    }
+  }, []);
+
+  // handle login form submission
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const url = import.meta.env.VITE_AXIOS_URL + "user";
+    if (!email && !password) {
+      showToast("Empty Field!", "warning");
+      return;
+    }
+    axios.get(url).then((response) => {
+      dispatch({ type: "LOGIN_REQUEST" });
+      const finalPassword = response.data[0].password;
+      const finalEmail = response.data[0].email;
+
+      if (finalPassword === password && finalEmail === email) {
+        showToast("Success Login!", "success");
+        delete response.data[0].password;
+        Cookies.set("user", JSON.stringify(response.data[0]), { expires: 30 });
+        dispatch({ type: "LOGIN_SUCCESS", payload: response.data[0] });
+        location("/");
+      } else {
+        dispatch({ type: "LOGIN_FAILURE" });
+        showToast("Wrong Credantials!", "error");
+      }
+    });
+  };
+
   return (
     <div className="max-w-[480px] m-auto p-8 rounded-md shadow-lg my-20 border">
       <div className="wrapper flex flex-col gap-4">
@@ -12,9 +55,13 @@ const Login = () => {
             Hey, Enter your details to get sign in to your account{" "}
           </p>
         </div>
-        <div className="input flex flex-col gap-4">
+        <form
+          onSubmit={(e) => handleLogin(e)}
+          className="input flex flex-col gap-4"
+        >
           <div className="relative">
             <input
+              onChange={(e) => setEmail(e.target.value)}
               type="email"
               className="p-2 border rounded-md w-full"
               placeholder="Enter Email"
@@ -35,6 +82,7 @@ const Login = () => {
           </div>
           <div className="relative">
             <input
+              onChange={(e) => setPassword(e.target.value)}
               type={passwordHide ? "text" : "password"}
               className="p-2 border rounded-md w-full"
               placeholder="Password"
@@ -77,10 +125,13 @@ const Login = () => {
               </p>
             )}
           </div>
-          <button className="capitalize shadow-md hover:shadow-lg bg-primary hover:bg-primaryHover transition-all text-white p-2 px-4 rounded-md">
+          <button
+            type="submit"
+            className="capitalize shadow-md hover:shadow-lg bg-primary hover:bg-primaryHover transition-all text-white p-2 px-4 rounded-md"
+          >
             Sign in
           </button>
-        </div>
+        </form>
         <p className="text-center my-4 text-sm">Or Sign in with</p>
         <div className="justify-evenly flex flex-row">
           <div className="p-2 px-8 border rounded-md flex items-center gap-2">
