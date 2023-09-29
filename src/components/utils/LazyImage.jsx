@@ -15,6 +15,7 @@ const LazyImage = ({ smallSrc, largeSrc, alt }) => {
           src={largeSrc}
           alt={alt}
           onLoad={handleImageLoad}
+          loading="lazy"
         />
       ) : (
         <img
@@ -22,6 +23,7 @@ const LazyImage = ({ smallSrc, largeSrc, alt }) => {
           src={smallSrc}
           alt={alt}
           onLoad={handleImageLoad}
+          loading="lazy"
         />
       )}
     </>

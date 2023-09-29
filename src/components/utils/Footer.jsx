@@ -42,13 +42,13 @@ const Footer = () => {
         <p>2023 HealthCo AI</p>
         <div className="social-icons flex gap-4">
           <div className="bg-primary p-2 rounded-full cursor-pointer hover:bg-primaryHover">
-            <img src="/Twitter.png" alt="" />
+            <img loading="lazy" src="/Twitter.png" alt="" />
           </div>
           <div className="bg-primary p-2 rounded-full cursor-pointer hover:bg-primaryHover">
-            <img src="/Discord.png" alt="" />
+            <img loading="lazy" src="/Discord.png" alt="" />
           </div>
           <div className="bg-primary p-2 rounded-full cursor-pointer hover:bg-primaryHover">
-            <img src="/GitHub.png" alt="" />
+            <img loading="lazy" src="/GitHub.png" alt="" />
           </div>
         </div>
       </div>

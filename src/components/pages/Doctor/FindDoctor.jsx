@@ -184,7 +184,7 @@ const FindDoctor = () => {
       </div>
       <div className="bg-primary w-full h-44 relative flex justify-center mt-[400px] sm:mt-[450px]">
         <div className="w-[300px] sm:w-[400px] flex justify-center bg-primary p-8 rounded-t-full absolute -top-[400px]">
-          <img src="./doctors.png" alt="doctors" />
+          <img loading="lazy" src="./doctors.png" alt="doctors" />
         </div>
       </div>
     </div>

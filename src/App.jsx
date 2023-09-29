@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useDispatchContext } from "./store";
 import ProtectedRoute from "./Routes/ProtectedRoute";
+import { showToast } from "./components/utils/Toast";
 
 function App() {
   const dispatch = useDispatchContext();
@@ -25,6 +26,7 @@ function App() {
       user = JSON.parse(user);
       dispatch({ type: "LOGIN_SUCCESS", payload: user });
     } else {
+      showToast("Login failed", "error");
       dispatch({ type: "LOGIN_FAILURE" });
     }
   }, []);

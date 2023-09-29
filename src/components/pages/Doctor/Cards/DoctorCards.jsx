@@ -114,7 +114,7 @@ const DoctorCards = () => {
               style={{ outlineColor: item.randomColor }}
               className={`image outline outline-2 outline-offset-8 rounded-full overflow-hidden w-48 m-auto`}
             >
-              <img src="../doctor.png" alt="doctor" />
+              <img loading="lazy" src="../doctor.png" alt="doctor" />
             </div>
             <div>
               <h1 className="text-xl font-semibold">{item.name}</h1>
@@ -123,7 +123,7 @@ const DoctorCards = () => {
                   {item.specialist}
                 </p>
                 <div className="rating flex items-center gap-1">
-                  <img src="../svg/star.svg" alt="star" />
+                  <img loading="lazy" src="../svg/star.svg" alt="star" />
                   <p className="rating">{item.rating}(20)</p>
                 </div>
               </div>
@@ -135,7 +135,7 @@ const DoctorCards = () => {
                   to={`/doctor/appointment/checkout/${item.id}`}
                   className="p-2 bg-primary rounded-full"
                 >
-                  <img src="../svg/arrow.svg" alt="arrow" />
+                  <img loading="lazy" src="../svg/arrow.svg" alt="arrow" />
                 </Link>
               </div>
             </div>
