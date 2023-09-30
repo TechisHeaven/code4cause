@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "json-server": "json-server --watch db.json",
-    "build": "vite build && json-server --watch db.json",
+    "json-server": "json-server --watch db.json --port 3001",
+    "start": "node api/server.js",
+    "build": "vite build",
     "postinstall": "echo 'Postinstall script completed.'",
     "dev": "vite",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
