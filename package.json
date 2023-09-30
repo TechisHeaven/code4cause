@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "json-server": "json-server --watch db.json --port 3001",
-    "start": "node api/server.js",
+    "start": "npm run build && echo 'Build completed!' && npm run json-server",
     "build": "vite build",
     "postinstall": "echo 'Postinstall script completed.'",
     "dev": "vite",
