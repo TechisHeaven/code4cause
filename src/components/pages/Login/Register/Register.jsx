@@ -16,7 +16,7 @@ const Register = () => {
     if (user.user) {
       location("/");
     }
-  }, []);
+  }, [user]);
 
   const handleLogin = () => {
     const UserData = {

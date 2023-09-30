@@ -10,7 +10,7 @@ const Profile = () => {
     if (!user) {
       location("/");
     }
-  }, []);
+  }, [user]);
   const appointment = [
     {
       id: 1,

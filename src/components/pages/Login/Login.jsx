@@ -18,7 +18,7 @@ const Login = () => {
     if (user.user) {
       location("/");
     }
-  }, []);
+  }, [user]);
 
   // handle login form submission
   const handleLogin = (e) => {
@@ -28,22 +28,30 @@ const Login = () => {
       showToast("Empty Field!", "warning");
       return;
     }
-    axios.get(url).then((response) => {
-      dispatch({ type: "LOGIN_REQUEST" });
-      const finalPassword = response.data[0].password;
-      const finalEmail = response.data[0].email;
+    axios
+      .get(url)
+      .then((response) => {
+        dispatch({ type: "LOGIN_REQUEST" });
+        const finalPassword = response.data[0].password;
+        const finalEmail = response.data[0].email;
 
-      if (finalPassword === password && finalEmail === email) {
-        showToast("Success Login!", "success");
-        delete response.data[0].password;
-        Cookies.set("user", JSON.stringify(response.data[0]), { expires: 30 });
-        dispatch({ type: "LOGIN_SUCCESS", payload: response.data[0] });
-        location("/");
-      } else {
-        dispatch({ type: "LOGIN_FAILURE" });
-        showToast("Wrong Credantials!", "error");
-      }
-    });
+        if (finalPassword === password && finalEmail === email) {
+          showToast("Success Login!", "success");
+          delete response.data[0].password;
+          Cookies.set("user", JSON.stringify(response.data[0]), {
+            expires: 30,
+          });
+          dispatch({ type: "LOGIN_SUCCESS", payload: response.data[0] });
+          location("/");
+        } else {
+          dispatch({ type: "LOGIN_FAILURE" });
+          showToast("Wrong Credantials!", "error");
+        }
+      })
+      .catch((err) => {
+        showToast("Error: " + err.message, "error");
+        console.log(err);
+      });
   };
 
   return (
