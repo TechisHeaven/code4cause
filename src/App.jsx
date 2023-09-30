@@ -26,7 +26,7 @@ function App() {
       user = JSON.parse(user);
       dispatch({ type: "LOGIN_SUCCESS", payload: user });
     } else {
-      showToast("Login failed", "error");
+      // showToast("Login Again!!", "error");
       dispatch({ type: "LOGIN_FAILURE" });
     }
   }, []);
