@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "json-server": "json-server --watch db.json",
-    "dev": "vite && json-server --watch db.json",
+    "json-server": "json-server --watch db.json --port 3001",
+    "start": "npm run build && echo 'Build completed!' && npm run json-server",
     "build": "vite build",
-    "start": "npm run build && json-server --watch db.json",
     "postinstall": "echo 'Postinstall script completed.'",
+    "dev": "vite",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -19,6 +19,7 @@
     "framer-motion": "^10.16.4",
     "js-cookie": "^3.0.5",
     "json-server": "^0.17.3",
+    "npm-run-all": "^4.1.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
