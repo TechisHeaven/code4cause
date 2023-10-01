@@ -22,7 +22,8 @@ function App() {
   useEffect(() => {
     dispatch({ type: "LOGIN_REQUEST" });
     let user = Cookies.get("user");
-    if (user) {
+
+    if (user && user !== "undefined") {
       user = JSON.parse(user);
       dispatch({ type: "LOGIN_SUCCESS", payload: user });
     } else {

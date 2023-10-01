@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatchContext, useStateContext } from "../../../../store";
 import { showToast } from "../../../utils/Toast";
+import Cookies from "js-cookie";
 
 const Register = () => {
   const { user } = useStateContext();
@@ -25,14 +26,30 @@ const Register = () => {
       email: email,
       password: password,
     };
-    const url = import.meta.env.VITE_AXIOS_URL + "user";
-    axios.post(url, UserData).then((response) => {
-      dispatch({ type: "LOGIN_REQUEST" });
-      showToast("Success Register!", "success");
-      delete response.data[0].password;
-      Cookies.set("user", JSON.stringify(response.data[0]), { expires: 30 });
-      dispatch({ type: "LOGIN_SUCCESS", payload: response.data[0] });
-      location("/");
+    const checkEmailUrl = `${
+      import.meta.env.VITE_AXIOS_URL
+    }user?email=${email}`;
+    axios.get(checkEmailUrl).then((response) => {
+      // If a user with the same email exists, display an error message
+      if (response.data.length > 0) {
+        showToast(
+          "Email already exists. Please choose another email.",
+          "error"
+        );
+      } else {
+        const url = import.meta.env.VITE_AXIOS_URL + "user";
+        axios.post(url, UserData).then((response) => {
+          dispatch({ type: "LOGIN_REQUEST" });
+          showToast("Success Register!", "success");
+          console.log(response);
+          delete response.data.password;
+          Cookies.set("user", JSON.stringify(response.data[0]), {
+            expires: 30,
+          });
+          dispatch({ type: "LOGIN_SUCCESS", payload: response.data[0] });
+          location("/");
+        });
+      }
     });
   };
   return (
