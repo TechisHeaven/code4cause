@@ -23,7 +23,7 @@ const Login = () => {
   // handle login form submission
   const handleLogin = (e) => {
     e.preventDefault();
-    const url = import.meta.env.VITE_AXIOS_URL + "user";
+    const url = import.meta.env.VITE_AXIOS_URL + "user?email=" + email;
     if (!email && !password) {
       showToast("Empty Field!", "warning");
       return;
@@ -32,6 +32,7 @@ const Login = () => {
       .get(url)
       .then((response) => {
         dispatch({ type: "LOGIN_REQUEST" });
+        console.log(response.data);
         const finalPassword = response.data[0].password;
         const finalEmail = response.data[0].email;
 
