@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatchContext, useStateContext } from "../../../../store";
-import showToast from "../../../utils/Toast";
+import { showToast } from "../../../utils/Toast";
 
 const Register = () => {
   const { user } = useStateContext();
