@@ -32,6 +32,10 @@ const Login = () => {
       .get(url)
       .then((response) => {
         dispatch({ type: "LOGIN_REQUEST" });
+        if (response.data.length <= 0) {
+          console.log(response.data.length);
+          return showToast("User dosn't exists!", "error");
+        }
         console.log(response.data);
         const finalPassword = response.data[0].password;
         const finalEmail = response.data[0].email;
