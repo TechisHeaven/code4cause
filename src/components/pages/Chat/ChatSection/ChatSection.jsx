@@ -82,7 +82,7 @@ const ChatSection = () => {
   return (
     <div
       ref={chatContainerRef}
-      className="max-w-[1026px] overflow-y-scroll h-[calc(100vh-221px)] w-full relative scroll-smooth"
+      className="max-w-[1026px] overflow-y-scroll h-[calc(100vh-221px)] w-full scroll-smooth"
     >
       <div
         className={`message-area ${

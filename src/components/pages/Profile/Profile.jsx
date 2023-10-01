@@ -54,8 +54,8 @@ const Profile = () => {
     },
   ];
   return (
-    <div className="max-w-[1280px] m-auto my-12">
-      <div className="flex flex-row gap-8 justify-center">
+    <div className="max-w-[1280px] m-auto my-12 p-4">
+      <div className="flex flex-row gap-8 justify-center max-[640px]:flex-col items-center">
         <div className="max-w-[420px] max-h-[620px] w-full bg-white shadow-md border p-4 rounded-md flex flex-col gap-4">
           <div className="w-full h-1/2 overflow-hidden ">
             <img

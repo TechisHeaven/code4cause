@@ -4,9 +4,9 @@ import TimeSelect from "../../../../utils/TimeSelect";
 
 const Checkout = () => {
   return (
-    <div className="max-w-[1280px] m-auto flex gap-4 mb-8">
+    <div className="max-w-[1280px] m-auto flex gap-4 mb-8 p-2 max-[980px]:flex-col flex-row">
       <div className="flex gap-4 flex-row flex-wrap">
-        <div className="flex gap-4">
+        <div className="flex gap-4 max-[640px]:flex-col flex-row">
           <div className="calender max-w-[320px] bg-white shadow-md border w-full rounded-md">
             <Calendar />
           </div>
@@ -45,7 +45,7 @@ const Checkout = () => {
             </p>
             <input
               id="fullname"
-              className="ml-10 mt-2 border p-2 w-full max-w-[390px] rounded-sm text-sm"
+              className="ml-10 mt-2 border p-2 min-[480px]:w-full  max-w-[390px]  rounded-sm text-sm"
               type="text"
               placeholder="Full Name..."
             />
@@ -82,7 +82,7 @@ const Checkout = () => {
             </p>
             <input
               id="email"
-              className="ml-10 mt-2 border p-2 w-full max-w-[390px] rounded-sm text-sm"
+              className="ml-10 mt-2 border p-2 min-[480px]:w-full max-w-[390px] rounded-sm text-sm"
               type="text"
               placeholder="example@gmail.com"
             />
@@ -119,7 +119,7 @@ const Checkout = () => {
             </p>
             <input
               id="mobile"
-              className="ml-10 mt-2 border p-2 w-full max-w-[390px] rounded-sm text-sm"
+              className="ml-10 mt-2 border p-2 min-[480px]:w-full max-w-[390px] rounded-sm text-sm"
               type="text"
               placeholder="Mobile Number"
             />

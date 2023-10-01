@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "json-server": "json-server --watch db.json --port 3001",
-    "start": "node api/server.js",
+    "json-server": "json-server --watch db.json",
     "build": "vite build",
     "postinstall": "echo 'Postinstall script completed.'",
     "dev": "vite",

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Sidebar = () => {
   const [selectedTile, setSelectedTile] = useState([]);
+  const [openSidebar, setOpenSideBar] = useState(true);
   const history = [
     {
       id: 1,
@@ -24,19 +25,101 @@ const Sidebar = () => {
       description: "Get notified when someones posts a comment on a posting.",
     },
   ];
+  const historyItems = JSON.parse(localStorage.getItem("historyItems"));
+  // localStorage.setItem("historyItems", JSON.stringify(history));
+
+  useEffect(() => {
+    const storedSelectedTile = localStorage.getItem("history");
+    if (storedSelectedTile) {
+      setSelectedTile(JSON.parse(storedSelectedTile));
+    }
+  }, []);
 
   const toggleSelection = (id) => {
+    let updatedSelectedTile = [...selectedTile];
+
     if (selectedTile.includes(id)) {
-      setSelectedTile(selectedTile.filter((tileId) => tileId !== id));
+      updatedSelectedTile = updatedSelectedTile.filter(
+        (tileId) => tileId !== id
+      );
     } else {
-      setSelectedTile([...selectedTile, id]);
+      updatedSelectedTile.push(id);
     }
+
+    setSelectedTile(updatedSelectedTile);
+
+    // Update local storage with the updatedSelectedTile
+    localStorage.setItem("history", JSON.stringify(updatedSelectedTile));
   };
 
+  const HandleSideBar = () => {
+    setOpenSideBar(!openSidebar);
+  };
+
+  const handleDeleteHistory = () => {
+    // Create a copy of the current selectedTile
+    const updatedSelectedTile = [...selectedTile];
+
+    // Loop through selectedTile and remove the items from local storage
+    updatedSelectedTile.forEach((id) => {
+      const itemIndex = historyItems.findIndex((item) => item.id === id);
+      if (itemIndex !== -1) {
+        // Remove the item from historyItems in state
+        updatedSelectedTile.splice(itemIndex, 1);
+
+        // Remove the item from local storage
+        const storedHistoryItems =
+          JSON.parse(localStorage.getItem("historyItems")) || [];
+        const itemStorageIndex = storedHistoryItems.findIndex(
+          (item) => item.id === id
+        );
+        if (itemStorageIndex !== -1) {
+          storedHistoryItems.splice(itemStorageIndex, 1);
+          localStorage.setItem(
+            "historyItems",
+            JSON.stringify(storedHistoryItems)
+          );
+        }
+      }
+    });
+
+    setSelectedTile(updatedSelectedTile);
+    localStorage.removeItem("selectedTile");
+    // Uncheck all checkboxes
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+  };
+
+  useEffect(() => {
+    const query = `(max-width: 680px)`;
+    const media = window.matchMedia(query);
+
+    const handleMediaChange = (event) => {
+      if (event.matches) {
+        setOpenSideBar(false);
+      } else {
+        setOpenSideBar(true);
+      }
+    };
+    media.addListener(handleMediaChange);
+    handleMediaChange(media);
+    return () => {
+      media.removeListener(handleMediaChange);
+    };
+  }, []);
+
   return (
-    <div className="max-w-[254px] relative w-full p-2 border flex flex-col gap-2 h-[calc(100vh-221px)]">
+    <div
+      style={openSidebar ? { width: "100%" } : { width: "20%" }}
+      className="max-w-[254px] bg-background relative w-full p-2 border flex flex-col gap-2 h-[calc(100vh-221px)]"
+    >
       <div className="header flex gap-2">
-        <button className="border flex px-4 p-2 w-full rounded-md items-center justify-center">
+        <button
+          style={openSidebar ? { display: "flex" } : { display: "none" }}
+          className="border flex px-4 p-2 w-full rounded-md items-center justify-center"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -53,7 +136,10 @@ const Sidebar = () => {
           </svg>
           <p>Add Chat</p>
         </button>
-        <button className="border rounded-md p-2">
+        <button
+          className="border rounded-md p-2"
+          onClick={() => HandleSideBar()}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -70,8 +156,11 @@ const Sidebar = () => {
           </svg>
         </button>
       </div>
-      <div className="items flex flex-col gap-2">
-        {history.map((item, index) => {
+      <div
+        className="items flex flex-col gap-2"
+        style={openSidebar ? { display: "flex" } : { display: "none" }}
+      >
+        {historyItems?.map((item, index) => {
           return (
             <label
               key={item.id}
@@ -85,6 +174,7 @@ const Sidebar = () => {
                   id={item.id}
                   name="comments"
                   type="checkbox"
+                  checked={selectedTile.includes(item.id)}
                   onChange={() => toggleSelection(item.id)}
                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                 />
@@ -101,8 +191,16 @@ const Sidebar = () => {
           );
         })}
       </div>
-      <div className="bg-white p-2 absolute bottom-2 left-0 w-full">
-        <div className="flex border p-2 rounded-md cursor-pointer items-center justify-center">
+      <div
+        style={openSidebar ? { display: "block" } : { display: "none" }}
+        className={` p-2 absolute bottom-2 left-0 w-full`}
+      >
+        <div
+          className={`${
+            selectedTile.length <= 0 && "pointer-events-none"
+          } flex border p-2 rounded-md cursor-pointer items-center justify-center`}
+          onClick={() => handleDeleteHistory()}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

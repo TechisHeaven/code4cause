@@ -3,6 +3,23 @@
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 18px;
   grid-row-gap: 18px;
+  padding: 2rem;
+}
+
+@media screen and (max-width: 1310px) {
+  .doctor-items {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media screen and (max-width: 862px) {
+  .doctor-items {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 480px) {
+  .doctor-items {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 /* 
 .doctor-item .image {

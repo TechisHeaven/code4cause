@@ -7,6 +7,9 @@
   font-family: "Source Sans 3", sans-serif;
   image-rendering: auto;
 }
+body {
+  background-color: #f9f7f3;
+}
 
 .chatBotSection::before {
   content: "";

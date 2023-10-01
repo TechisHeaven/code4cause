@@ -79,7 +79,7 @@ const index = () => {
           Search Doctor and make{" "}
           <span className="text-secondary">appointment</span>
         </h1>
-        <p className="text-textSecondary">
+        <p className="text-textSecondary text-base max-[480px]:text-sm">
           Discover the best doctor, clinic & hospitals the city nearest to you
         </p>
         <div className="flex md:flex-row gap-2 flex-col sm:flex-col">
@@ -181,7 +181,7 @@ const index = () => {
         </div>
       </div>
       <div className="page-container min-h-[350px] h-full">
-        <div className="flex justify-between my-4">
+        <div className="flex justify-between items-center p-2 gap-4 my-4 max-[480px]:flex-col  md:flex-row flex-row">
           <p>212 Doctors are ready to help you</p>
 
           <div className="flex items-center gap-2">

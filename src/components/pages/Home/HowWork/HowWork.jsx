@@ -3,7 +3,7 @@ import Steps from "./Steps/Steps";
 
 const HowWork = () => {
   return (
-    <div className="max-w-[1280px] m-auto p-8 px-32 max-[1024px]:px-20 my-40">
+    <div className="max-w-[1280px] m-auto p-8 sm:px-10 md:px-32 lg:px-20  md:my-40">
       <div className="wrapper flex items-center gap-12 max-[768px]:flex-col max-[768px]:my-20">
         <div className="imageContainer p-8 border-2 rounded-xl bg-white border-secondary shadow-2xl shadow-secondary/70 hover:shadow-secondary/80 transition-all">
           <img loading="lazy" src="./doctor-sitting.png" alt="doctor-sitting" />
