@@ -5,6 +5,12 @@
       "email": "Himanshu@gmail.com",
       "password": "123",
       "id": 1
+    },
+    {
+      "name": "Test",
+      "email": "test@gmail.com",
+      "password": "123",
+      "id": 2
     }
   ],
   "comments": [
