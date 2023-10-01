@@ -41,12 +41,11 @@ const Register = () => {
         axios.post(url, UserData).then((response) => {
           dispatch({ type: "LOGIN_REQUEST" });
           showToast("Success Register!", "success");
-          console.log(response);
           delete response.data.password;
-          Cookies.set("user", JSON.stringify(response.data[0]), {
+          Cookies.set("user", JSON.stringify(response.data), {
             expires: 30,
           });
-          dispatch({ type: "LOGIN_SUCCESS", payload: response.data[0] });
+          dispatch({ type: "LOGIN_SUCCESS", payload: response.data });
           location("/");
         });
       }
