@@ -1,75 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import { useStateContext } from "../../../../store";
 
-const ChatSection = () => {
-  const chat = [
-    {
-      id: 1,
-      message: "Hello! How can I assist you today?",
-      type: "bot",
-    },
-    {
-      id: 2,
-      message:
-        " Hi there. I've been having some persistent headaches lately, and I'm not sure what's causing them.",
-      type: "user",
-    },
-    {
-      id: 3,
-      message:
-        "I'm sorry to hear that you're experiencing headaches. I'd like to help. Can you provide me with some more information? When did the headaches start, and have you noticed any patterns or triggers?",
-      type: "bot",
-    },
-    {
-      id: 4,
-      message:
-        "The headaches began about two weeks ago. They seem to occur mostly in the afternoon, and I can't pinpoint any specific triggers.",
-      type: "user",
-    },
-    {
-      id: 5,
-      message:
-        "Thank you for sharing that information. It's helpful to know when they started and the timing. Have you experienced any other symptoms along with the headaches, such as nausea, sensitivity to light, or changes in vision?",
-      type: "bot",
-    },
-    {
-      id: 6,
-      message:
-        "The headaches began about two weeks ago. They seem to occur mostly in the afternoon, and I can't pinpoint any specific triggers.",
-      type: "user",
-    },
-    {
-      id: 7,
-      message:
-        "The headaches began about two weeks ago. They seem to occur mostly in the afternoon, and I can't pinpoint any specific triggers.",
-      type: "user",
-    },
-    {
-      id: 8,
-      message:
-        "The headaches began about two weeks ago. They seem to occur mostly in the afternoon, and I can't pinpoint any specific triggers.",
-      type: "user",
-    },
-    {
-      id: 9,
-      message:
-        "The headaches began about two weeks ago. They seem to occur mostly in the afternoon, and I can't pinpoint any specific triggers.",
-      type: "user",
-    },
-    {
-      id: 10,
-      message:
-        "The headaches began about two weeks ago. They seem to occur mostly in the afternoon, and I can't pinpoint any specific triggers.",
-      type: "user",
-    },
-  ];
-  // const chat = [
-  //   {
-  //     id: 1,
-  //     message: "Hello! How can I assist you today?",
-  //     type: "bot",
-  //   },
-  // ];
+const ChatSection = ({ selectedTab }) => {
   const chatContainerRef = useRef(null);
+  const [chat, setChat] = useState([]);
+  const { user } = useStateContext();
 
   useEffect(() => {
     // Scroll to the bottom when the component first mounts or when chat messages change
@@ -79,49 +15,89 @@ const ChatSection = () => {
     }
   }, [chat]);
 
+  useEffect(() => {
+    if (user && user.user && user.user.id) {
+      let userID = user.user.id;
+      // let url =
+      //   import.meta.env.VITE_AXIOS_URL +
+      //   "chat?SenderId=" +
+      //   selectedTab +
+      //   "&ReceiverId=" +
+      //   userID;
+      let url = `http://localhost:3000/chat?SenderId=${selectedTab}&ReceiverId=${userID}&SenderId=${userID}&ReceiverId=${selectedTab}`;
+      axios.get(url).then((value) => {
+        if (value.status === 200) {
+          setChat(value.data);
+        }
+      });
+    }
+  }, [selectedTab, user]);
+
+  const messagesFromSelectedSender = chat.filter(
+    (item) => item.SenderId === selectedTab
+  );
+
   return (
     <div
       ref={chatContainerRef}
-      className="max-w-[1026px] overflow-y-scroll h-[calc(100vh-221px)] w-full scroll-smooth"
+      className="max-w-[1026px] h-[80vh]  overflow-y-auto w-full scroll-smooth overflow-hidden"
     >
       <div
         className={`message-area ${
           chat.length > 6 ? " h-auto" : "h-full"
         } flex w-full gap-4 justify-end flex-col`}
       >
-        {chat.map((item) => {
-          return (
-            <div key={item.id}>
-              {item.type === "bot" ? (
-                <div className="BotMessage m-2 max-w-[600px] flex items-center">
-                  <div className="flex items-center gap-4">
-                    <img
-                      className="h-8 w-8 flex-none rounded-full bg-gray-50"
-                      src="./vite.svg"
-                      alt="chatbot"
-                    />
-                    <p className="message mr-auto p-2 px-4 max-w-[600px] bg-gray-200 border rounded-md">
-                      {item.message}
-                    </p>
-                  </div>
+        {selectedTab ? (
+          messagesFromSelectedSender.length > 0 ? (
+            chat.map((item) => {
+              return (
+                <div key={item.Chatid}>
+                  {item.SenderId === selectedTab ? (
+                    <div className="SenderMessage m-2 max-w-[600px] flex items-center">
+                      <div className="flex items-center gap-4">
+                        <img
+                          className="h-8 w-8 flex-none rounded-full bg-gray-50"
+                          src="./vite.svg"
+                          alt="chatbot"
+                        />
+                        <p className="message mr-auto p-2 px-4 max-w-[600px] bg-gray-200 border rounded-md">
+                          {item.message}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="ReceiverMessage m-4 ml-auto flex-col-reverse max-w-[600px] flex items-center">
+                      <div className="flex items-center gap-4">
+                        <p className="message ml-auto bg-primary text-white rounded-md p-2 px-4">
+                          {item.message}
+                        </p>
+                        <img
+                          className="h-8 w-8 flex-none rounded-full bg-gray-100"
+                          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                          alt="chatbot"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
-              ) : (
-                <div className="UserMessage m-4 ml-auto flex-col-reverse max-w-[600px] flex items-center">
-                  <div className="flex items-center gap-4">
-                    <p className="message ml-auto bg-primary text-white rounded-md p-2 px-4">
-                      {item.message}
-                    </p>
-                    <img
-                      className="h-8 w-8 flex-none rounded-full bg-gray-100"
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt="chatbot"
-                    />
-                  </div>
-                </div>
-              )}
+              );
+            })
+          ) : (
+            <div
+              className="h-[calc(100vh-300px)] grid place-items-center text-2xl  
+          capitalize text-textSecondary"
+            >
+              blank messages
             </div>
-          );
-        })}
+          )
+        ) : (
+          <div
+            className="h-[calc(100vh-300px)] grid place-items-center text-2xl  
+          capitalize text-textSecondary"
+          >
+            please select conversation
+          </div>
+        )}
       </div>
       <div className="chatbox items-center justify-center flex gap-2 bg-white sticky bottom-0 border-t-2 p-4 w-full">
         <input

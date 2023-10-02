@@ -1,7 +1,7 @@
 import Header from "./components/utils/Header";
 import Home from "./components/pages/Home/index";
 import NotFound from "./components/pages/NotFound/index";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Footer from "./components/utils/Footer";
 import Login from "./components/pages/Login/Login";
 import Register from "./components/pages/Login/Register/Register";
@@ -17,6 +17,7 @@ import ProtectedRoute from "./Routes/ProtectedRoute";
 import { showToast } from "./components/utils/Toast";
 
 function App() {
+  const location = useLocation();
   const dispatch = useDispatchContext();
 
   useEffect(() => {
@@ -31,12 +32,12 @@ function App() {
       dispatch({ type: "LOGIN_FAILURE" });
     }
   }, []);
-
+  const isChatPage = location.pathname === "/chat";
   return (
     <>
-      <Header />
+      {!isChatPage && <Header />}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" exact element={<Home />} />
         <Route path="/doctor" element={<FindDoctor />} />
         <Route path="/doctor/appointment" element={<Appointment />} />
         <Route path="/doctor/appointment/checkout/:id" element={<Checkout />} />
@@ -44,7 +45,6 @@ function App() {
         <Route path="/contact" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/chat" element={<Chat />} />
         <Route
           path="/profile"
           element={
@@ -53,11 +53,12 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/chat" element={<Chat />} />
         {/* <ProtectedRoute path="/profile" element={<Profile />} /> */}
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
+      {!isChatPage && <Footer />}
     </>
   );
 }
