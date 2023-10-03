@@ -24,5 +24,117 @@
       "password": "123",
       "id": 4
     }
+  ],
+  "chat": [
+    {
+      "Chatid": 1,
+      "conversationId": 1,
+      "SenderId": 1,
+      "ReceiverId": 2,
+      "message": "Hello, how are you?"
+    },
+    {
+      "Chatid": 2,
+      "conversationId": 1,
+      "SenderId": 2,
+      "ReceiverId": 1,
+      "message": "I'm good, thanks! How about you?"
+    },
+    {
+      "Chatid": 3,
+      "conversationId": 1,
+      "SenderId": 1,
+      "ReceiverId": 2,
+      "message": "I'm doing well too. What are you up to?"
+    },
+    {
+      "Chatid": 4,
+      "conversationId": 1,
+      "SenderId": 2,
+      "ReceiverId": 1,
+      "message": "Just hanging out. How about you?"
+    },
+    {
+      "Chatid": 5,
+      "conversationId": 1,
+      "SenderId": 1,
+      "ReceiverId": 2,
+      "message": "I'm working on a new project."
+    },
+    {
+      "Chatid": 6,
+      "conversationId": 1,
+      "SenderId": 2,
+      "ReceiverId": 1,
+      "message": "That sounds exciting. What is it about?"
+    },
+    {
+      "Chatid": 7,
+      "conversationId": 1,
+      "SenderId": 1,
+      "ReceiverId": 2,
+      "message": "It's a mobile app for managing expenses."
+    },
+    {
+      "Chatid": 8,
+      "conversationId": 1,
+      "SenderId": 2,
+      "ReceiverId": 1,
+      "message": "That's useful. Let me know if you need any help."
+    },
+    {
+      "Chatid": 9,
+      "conversationId": 1,
+      "SenderId": 1,
+      "ReceiverId": 2,
+      "message": "Thanks, I'll keep that in mind."
+    },
+    {
+      "Chatid": 10,
+      "conversationId": 1,
+      "SenderId": 2,
+      "ReceiverId": 1,
+      "message": "Sure, I'll keep you updated on the progress."
+    },
+    {
+      "Chatid": 11,
+      "conversationId": 4,
+      "SenderId": 3,
+      "ReceiverId": 1,
+      "message": "Test 3."
+    },
+    {
+      "Chatid": 12,
+      "conversationId": 4,
+      "SenderId": 1,
+      "ReceiverId": 3,
+      "message": "Test 3 from user."
+    }
+  ],
+  "conversations": [
+    {
+      "conversationId": 1,
+      "senderId": 2,
+      "senderName": "Dr.Joh mehta",
+      "receiverId": 1
+    },
+    {
+      "conversationId": 2,
+      "senderId": 5,
+      "senderName": "Dr.Chris",
+      "receiverId": 4
+    },
+    {
+      "conversationId": 3,
+      "senderId": 4,
+      "senderName": "Dr.Rahul",
+      "receiverId": 1
+    },
+    {
+      "conversationId": 4,
+      "senderId": 3,
+      "senderName": "Dr.Cristiana",
+      "receiverId": 1
+    }
   ]
 }
