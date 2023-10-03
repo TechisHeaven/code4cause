@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useStateContext } from "../../../../store";
 import React, { useEffect, useState } from "react";
+import { showToast } from "../../../utils/Toast";
 
 const ConversationSidebar = ({ selectedTab, handleSelectTab }) => {
   const [searchInput, setSearchInput] = useState("");
@@ -15,12 +16,18 @@ const ConversationSidebar = ({ selectedTab, handleSelectTab }) => {
       let userId = user?.user?.id;
       let url =
         import.meta.env.VITE_AXIOS_URL + "conversations?receiverId=" + userId;
-      axios.get(url).then((value) => {
-        if (value.status === 200) {
-          setConversation(value.data);
-          setLoadingData(false);
-        }
-      });
+
+      axios
+        .get(url)
+        .then((value) => {
+          if (value.status === 200) {
+            setConversation(value.data);
+            setLoadingData(false);
+          }
+        })
+        .catch((err) => {
+          showToast(err.message, "error");
+        });
     }
   }, [user]);
 

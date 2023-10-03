@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useStateContext } from "../../../../store";
+import { showToast } from "../../../utils/Toast";
 
 const ChatSection = ({ selectedTab }) => {
   const chatContainerRef = useRef(null);
@@ -25,11 +26,16 @@ const ChatSection = ({ selectedTab }) => {
       //   "&ReceiverId=" +
       //   userID;
       let url = `http://localhost:3000/chat?SenderId=${selectedTab}&ReceiverId=${userID}&SenderId=${userID}&ReceiverId=${selectedTab}`;
-      axios.get(url).then((value) => {
-        if (value.status === 200) {
-          setChat(value.data);
-        }
-      });
+      axios
+        .get(url)
+        .then((value) => {
+          if (value.status === 200) {
+            setChat(value.data);
+          }
+        })
+        .catch((err) => {
+          showToast(err.message + " Chat", "error");
+        });
     }
   }, [selectedTab, user]);
 
