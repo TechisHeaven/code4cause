@@ -10,28 +10,12 @@ import Chat from "./components/pages/Chat/index";
 import FindDoctor from "./components/pages/Doctor/FindDoctor";
 import Appointment from "./components/pages/Doctor/Appointment";
 import Checkout from "./components/pages/Doctor/Appointment/Checkout/Checkout";
-import { useEffect } from "react";
-import Cookies from "js-cookie";
-import { useDispatchContext } from "./store";
 import ProtectedRoute from "./Routes/ProtectedRoute";
-import { showToast } from "./components/utils/Toast";
+import useAuth from "../hooks/useAuth";
 
 function App() {
   const location = useLocation();
-  const dispatch = useDispatchContext();
-
-  useEffect(() => {
-    dispatch({ type: "LOGIN_REQUEST" });
-    let user = Cookies.get("user");
-
-    if (user && user !== "undefined") {
-      user = JSON.parse(user);
-      dispatch({ type: "LOGIN_SUCCESS", payload: user });
-    } else {
-      // showToast("Login Again!!", "error");
-      dispatch({ type: "LOGIN_FAILURE" });
-    }
-  }, []);
+  useAuth();
   const isChatPage = location.pathname === "/chat";
   return (
     <>
@@ -54,8 +38,6 @@ function App() {
           }
         />
         <Route path="/chat" element={<Chat />} />
-        {/* <ProtectedRoute path="/profile" element={<Profile />} /> */}
-
         <Route path="*" element={<NotFound />} />
       </Routes>
       {!isChatPage && <Footer />}
